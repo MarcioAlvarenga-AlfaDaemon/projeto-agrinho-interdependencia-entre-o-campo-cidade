@@ -214,7 +214,7 @@ h1, h2, h3 {
     align-items: center;
     text-align: center;
     
-    background-image: url('switzerland-6487204_1920.jpg'); 
+    background-image: url(switzerland-6487204_1920.jpg); 
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -624,7 +624,7 @@ h1, h2, h3 {
         margin-bottom: 2rem;
     }
     .principal {
-        background-image: url('switzerland-6487204_1920.jpg');
+        background-image: url(switzerland-6487204_1920.jpg);
         background-size: cover;
         padding-top: 12.5rem;
         padding-bottom: 12.5rem;
@@ -645,7 +645,7 @@ h1, h2, h3 {
 /* Mídias para o caminho da imagem de fundo específico, se necessário */
 @media screen and (min-width: 368px) {
     .principal {
-        background-image: url('switzerland-6487204_1920.jpg');
+        background-image: url(switzerland-6487204_1920.jpg);
         background-repeat: no-repeat;
         background-size: cover;
     }
