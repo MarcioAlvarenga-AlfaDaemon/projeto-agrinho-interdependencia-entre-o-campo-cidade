@@ -1,0 +1,652 @@
+/* style.css */
+
+/* --- Variáveis CSS --- */
+:root {
+    --branco: #FFF;
+    --preto: #000;
+    --cinza-escuro: #5e5d53;
+    --cinza-claro:#9c9992;
+    --verde-cabecalho: #22a019c4; /* Seu verde com transparência */
+    --fundo-pagina: #E0FFD1; /* Cor de fundo verde lima! */
+    --cor-texto-padrao: #333; /* Cor de texto padrão */
+    --borda-suave: #ddd; /* Cor para bordas sutis */
+    --sombra-leve: rgba(0, 0, 0, 0.1); /* Sombra mais leve */
+    --sombra-media: rgba(0, 0, 0, 0.2); /* Sombra um pouco mais forte */
+    /* Variáveis para as fontes, conforme o seu desejo */
+    --fonte-principal: 'Open Sans', sans-serif;
+    --fonte-titulo: 'Montserrat', sans-serif;
+}
+
+/* --- Reset Básico e Estilos Globais --- */
+body {
+    margin: 0;
+    /* Ajuste o padding-top inicial para acomodar o cabeçalho completo */
+    padding-top: 120px; /* Valor aproximado para cabeçalho aberto - ajuste se necessário */
+    font-family: var(--fonte-principal);
+    background-color: var(--fundo-pagina);
+    line-height: 1.6;
+    color: var(--cor-texto-padrao);
+    transition: padding-top 0.3s ease; /* Transição suave para o padding do body */
+}
+
+/* Aplicando as fontes nos elementos apropriados */
+h1, h2, h3 {
+    font-family: var(--fonte-titulo);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.botao {
+    text-align: center;
+    display: inline-block;
+    max-width: 220px;
+    box-sizing: border-box;
+    padding: 1rem 2rem;
+    border: 1px solid var(--branco);
+    border-radius: 5px;
+    text-decoration: none;
+    color: var(--branco);
+    background-color: #007bff;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.botao:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+
+/* --- Estilizando o Cabeçalho FIXO --- */
+.cabecalho {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--verde-cabecalho);
+    padding: 20px 0; /* Padding vertical para o conteúdo interno do cabeçalho */
+    color: var(--branco);
+    
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    /* Transição para a propriedade transform (para subir/descer) */
+    transition: transform 0.3s ease;
+    overflow: hidden; /* Importante para o conteúdo desaparecer suavemente */
+    flex-direction: column;
+}
+
+/* Esconder o checkbox real */
+.toggle-cabecalho-checkbox {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none; /* Não interage com eventos do mouse */
+}
+
+/* Estilo do LABEL que funciona como botão de toggle */
+.toggle-label {
+    background-color: #0056b3; /* Cor sólida para o botão */
+    color: var(--branco);
+    border: 1px solid var(--branco);
+    border-radius: 0 0 0 10px; /* Já começa com o formato do botão "fechado" */
+    width: 100px; /* Largura para texto "Abrir" + ícone */
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1em; /* Ajustado para caber o texto */
+    cursor: pointer;
+    
+    position: fixed;
+    top: 0;
+    right: 0;
+    
+    box-shadow: 0 2px 5px var(--sombra-media);
+    transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease, 
+                border-radius 0.3s ease, width 0.3s ease, padding 0.3s ease;
+    z-index: 1001;
+    overflow: hidden;
+    padding: 0 10px; /* Padding para o conteúdo do label */
+}
+
+/* Estilo do ícone dentro do label */
+.toggle-label i {
+    flex-shrink: 0;
+    margin-right: 5px; /* Espaço entre ícone e texto */
+    transition: transform 0.3s ease; /* Transição para rotação da seta */
+}
+
+/* Texto do label - sempre visível neste modo, vamos mudar só o ícone */
+.toggle-label::after {
+    content: 'Fechar'; /* Texto padrão quando o cabeçalho está aberto */
+    color: var(--branco);
+}
+
+/* ESTADO DO CHECKBOX: QUANDO O CHECKBOX ESTÁ MARCADO (CABEÇALHO FECHADO) */
+.toggle-cabecalho-checkbox:checked ~ .cabecalho {
+    /* Mova o cabeçalho para cima, deixando apenas o botão visível (altura do botão: 40px) */
+    transform: translateY(calc(-100% + 40px));
+}
+
+/* Ajusta o padding do body quando o cabeçalho está FECHADO */
+.toggle-cabecalho-checkbox:checked ~ main {
+    padding-top: 40px; /* Altura do botão fixo */
+}
+
+/* Quando o checkbox está marcado (cabeçalho fechado), a seta vira para BAIXO */
+.toggle-cabecalho-checkbox:checked ~ .toggle-label i {
+    transform: rotate(180deg); /* Rotação para a seta apontar para baixo */
+}
+
+/* Quando o checkbox está marcado, o texto do label muda para 'Abrir' */
+.toggle-cabecalho-checkbox:checked ~ .toggle-label::after {
+    content: 'Abrir';
+}
+
+
+.container-header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    transition: opacity 0.3s ease; /* Para sumir/aparecer suavemente */
+}
+
+/* Quando o cabeçalho está fechado via checkbox, o menu e o título desaparecem */
+.toggle-cabecalho-checkbox:checked ~ .cabecalho .container-header {
+    opacity: 0;
+    pointer-events: none; /* Desabilita interações com o menu/título escondido */
+    height: 0; /* Garante que não ocupe espaço */
+    padding: 0 60px; /* Mantém o padding horizontal mesmo com height: 0 para transição suave */
+}
+
+.cabecalho__titulo { 
+    margin: 0; 
+    font-size: 2.5em;
+    font-weight: 700; 
+    color: var(--preto);
+    white-space: nowrap;
+}
+
+.cabecalho__logo {
+    height: 80px; 
+    width: auto;
+    margin-left: 20px; 
+}
+
+/* --- Estilo do Menu (Links de Navegação) --- */
+.menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 35px;
+}
+
+.menu a {
+    font-size: 1.1em;
+    color: var(--branco);
+    text-decoration: none;
+    padding: 8px 18px;
+    transition: all 0.3s ease;
+    border: 1px solid var(--branco);
+    border-radius: 4px;
+}
+
+.menu a:hover {
+    background-color: #f7e1ee;
+    color: var(--cor-texto-padrao);
+    border-color: #f7e1ee;
+}
+
+/* --- Estilizando a Seção Principal com Imagem de Fundo e Transparência --- */
+.principal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    
+    background-image: url('switzerland-6487204_1920.jpg'); 
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    
+    padding-top: 12.5rem; 
+    padding-bottom: 12.5rem; 
+
+    position: relative;
+    overflow: hidden;
+}
+
+.principal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.principal__titulo, 
+.principal__texto, 
+.principal__botao { 
+    position: relative;
+    z-index: 2; 
+}
+
+.principal__titulo {
+    font-family: var(--fonte-titulo);
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    color: var(--branco);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.principal__texto {
+    font-size: 1.25rem;
+    line-height: normal;
+    margin: 0 auto 2.5rem;
+    color: var(--branco);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* --- ESTILOS PARA AS SEÇÕES PRINCIPAIS (Intercâmbio Cultural, Tecnologia, Impacto Econômico) --- */
+.intercambio-cultural-section,
+.tecnologia-section, 
+.impacto-economico-section {
+    padding: 80px 20px;
+    text-align: center;
+    margin-bottom: 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px var(--sombra-media);
+    padding-top: 50px;
+    padding-bottom: 50px;
+    border: 1px solid var(--borda-suave);
+    background-color: var(--branco);
+    margin: 40px auto;
+    max-width: 1100px;
+}
+
+.intercambio-cultural-titulo,
+.tecnologia-titulo, 
+.impacto-economico-titulo {
+    font-family: var(--fonte-titulo);
+    font-size: 2.5em;
+    color: var(--cor-texto-padrao);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.intercambio-cultural-introducao,
+.tecnologia-introducao, 
+.impacto-economico-introducao {
+    font-size: 1.1em;
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto 50px auto;
+    line-height: 1.8;
+}
+
+/* --- ESTILOS PARA OS ITENS DA GRID (Cartões) --- */
+.intercambio-cultural-grid,
+.tecnologia-grid, 
+.impacto-economico-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.intercambio-cultural-item,
+.tecnologia-item, 
+.impacto-economico-item {
+    background-color: var(--branco);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px var(--sombra-leve);
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--borda-suave);
+}
+
+.intercambio-cultural-item:hover,
+.tecnologia-item:hover, 
+.impacto-economico-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px var(--sombra-media);
+}
+
+.item-titulo { 
+    font-family: var(--fonte-titulo);
+    font-size: 1.4em;
+    color: var(--verde-cabecalho);
+    margin-top: 0;
+    margin-bottom: 15px;
+    min-height: 2.8em;
+}
+
+.item-descricao { 
+    font-size: 0.95em;
+    color: #555;
+    line-height: 1.7;
+}
+
+/* --- ESTILOS PARA A SEÇÃO DE CONCLUSÃO --- */
+.conclusao-section {
+    padding: 60px 20px;
+    text-align: center;
+    margin-bottom: 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px var(--sombra-media);
+    padding-top: 50px;
+    padding-bottom: 50px;
+    border: 1px solid var(--borda-suave);
+    background-color: var(--branco);
+    margin: 40px auto;
+    max-width: 800px;
+    color: var(--cor-texto-padrao);
+}
+
+.conclusao-titulo {
+    font-size: 2.5em;
+    color: var(--cor-texto-padrao);
+    margin-bottom: 20px;
+    font-family: var(--fonte-titulo);
+}
+
+.conclusao-texto {
+    font-size: 1.1em;
+    color: #666;
+}
+
+/* --- ESTILOS PARA O RODAPÉ --- */
+.rodape-linha {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    margin: 50px 0 20px 0;
+}
+
+.rodape {
+    text-align: center;
+    padding: 20px 0;
+    background-color: var(--fundo-pagina);
+    color: var(--cor-texto-padrao);
+    font-size: 0.9em;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.rodape p {
+    margin: 0;
+}
+
+
+/* --- Responsividade Geral --- */
+
+/* Mídias para telas menores (até 767px) - GERALMENTE CELULARES */
+@media (max-width: 767px) { 
+    /* Ajuste o padding-top inicial para acomodar o cabeçalho completo */
+    body {
+        padding-top: 120px; /* Valor aproximado para cabeçalho aberto em mobile */
+    }
+
+    /* Quando o checkbox está marcado (cabeçalho FECHADO), ajusta o padding do body */
+    .toggle-cabecalho-checkbox:checked ~ main {
+        padding-top: 40px; /* Altura do label de toggle */
+    }
+
+    .container-header {
+        flex-direction: column;
+        align-items: center;
+        padding: 15px 20px;
+        gap: 15px;
+    }
+
+    .cabecalho__titulo { 
+        font-size: 1.8em;
+        margin-bottom: 0;
+        text-align: center;
+        white-space: normal;
+    }
+
+    .cabecalho__logo { 
+        display: none; 
+    }
+
+    .menu ul {
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .menu li {
+        width: 100%;
+    }
+
+    .menu a {
+        display: block;
+        width: auto;
+        margin: 0 auto;
+        padding: 10px 0;
+        box-sizing: border-box;
+    }
+
+    .principal {
+        padding: 60px 15px;
+    }
+
+    .principal__titulo { 
+        font-size: 2em;
+    }
+
+    .principal__texto { 
+        font-size: 1em;
+    }
+
+    .principal__botao { 
+        padding: 12px 25px;
+    }
+
+    /* Ajustes para todas as seções de conteúdo em mobile */
+    .intercambio-cultural-section,
+    .tecnologia-section, 
+    .impacto-economico-section,
+    .conclusao-section {
+        padding: 40px 15px;
+        margin: 20px auto;
+        box-shadow: 0 4px 10px var(--sombra-leve);
+    }
+
+    .intercambio-cultural-titulo,
+    .tecnologia-titulo, 
+    .impacto-economico-titulo,
+    .conclusao-titulo {
+        font-size: 1.8em;
+    }
+
+    .intercambio-cultural-introducao,
+    .tecnologia-introducao, 
+    .impacto-economico-introducao {
+        font-size: 0.95em;
+        margin-bottom: 30px;
+    }
+
+    .intercambio-cultural-grid,
+    .tecnologia-grid, 
+    .impacto-economico-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .intercambio-cultural-item,
+    .tecnologia-item, 
+    .impacto-economico-item {
+        padding: 20px;
+        box-shadow: 0 2px 8px var(--sombra-leve);
+    }
+
+    .item-titulo { 
+        font-size: 1.2em;
+        min-height: unset;
+    }
+
+    .item-descricao {
+        font-size: 0.9em;
+    }
+
+    .conclusao-texto {
+        font-size: 1em;
+    }
+
+    .rodape-linha {
+        margin: 30px 0 15px 0;
+    }
+
+    /* O label de toggle em mobile */
+    .toggle-label {
+        width: 100px; /* Largura para o texto + ícone */
+        border-radius: 0 0 0 10px; /* Arredonda só o canto inferior esquerdo */
+        font-size: 1em;
+        padding: 0 10px;
+    }
+}
+
+/* Mídias para tablets (entre 768px e 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    body {
+        padding-top: 100px; /* Valor aproximado para cabeçalho aberto em tablet */
+    }
+
+    /* Quando o checkbox está marcado (cabeçalho FECHADO), ajusta o padding do body */
+    .toggle-cabecalho-checkbox:checked ~ main {
+        padding-top: 40px; /* Altura do label de toggle */
+    }
+
+    .container-header {
+        padding: 0 30px;
+    }
+
+    .cabecalho__titulo {
+        font-size: 2.2em;
+    }
+
+    .menu ul {
+        gap: 20px;
+    }
+
+    .menu a {
+        padding: 8px 15px;
+    }
+
+    .principal {
+        padding-top: 10rem; 
+        padding-bottom: 10rem;
+    }
+
+    .principal__titulo {
+        font-size: 2.8rem;
+    }
+
+    .principal__texto {
+        font-size: 1.15rem;
+    }
+    
+    .intercambio-cultural-section,
+    .tecnologia-section, 
+    .impacto-economico-section,
+    .conclusao-section {
+        padding: 60px 25px;
+        margin: 30px auto;
+    }
+
+    .intercambio-cultural-titulo,
+    .tecnologia-titulo, 
+    .impacto-economico-titulo,
+    .conclusao-titulo {
+        font-size: 2.2em;
+    }
+
+    .intercambio-cultural-grid,
+    .tecnologia-grid, 
+    .impacto-economico-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+    }
+
+    /* O label de toggle em tablet */
+    .toggle-label {
+        width: 100px; /* Largura para texto + ícone */
+        border-radius: 0 0 0 10px; /* Arredonda só o canto inferior esquerdo */
+        font-size: 1em;
+        padding: 0 10px;
+    }
+}
+
+/* Mídias para telas maiores (1024px e acima) - DESKTOP */
+@media (min-width: 1024px) {
+    /* Ajuste o padding-top inicial para acomodar o cabeçalho completo */
+    body {
+        padding-top: 120px; /* Valor aproximado para cabeçalho aberto em desktop */
+    }
+
+    /* Quando o checkbox está marcado (cabeçalho FECHADO), ajusta o padding do body */
+    .toggle-cabecalho-checkbox:checked ~ main {
+        padding-top: 40px; /* Altura do label de toggle */
+    }
+
+    .container {
+        max-width: 1200px;
+        padding-left: calc((100% - 1160px)/2);
+        padding-right: calc((100% - 1160px)/2);
+    }
+    
+    .cabecalho__titulo {
+        font-size: 2.5em;
+    }
+
+    .principal__titulo {
+        font-size: 3.25rem;
+        margin-bottom: 2rem;
+    }
+    .principal {
+        background-image: url('switzerland-6487204_1920.jpg');
+        background-size: cover;
+        padding-top: 12.5rem;
+        padding-bottom: 12.5rem;
+    }
+    .principal__texto {
+        max-width: 600px;
+    }
+
+    /* O label de toggle em desktop */
+    .toggle-label {
+        width: 100px; /* Largura para texto + ícone */
+        border-radius: 0 0 0 10px; /* Arredonda só o canto inferior esquerdo */
+        font-size: 1em;
+        padding: 0 10px;
+    }
+}
+
+/* Mídias para o caminho da imagem de fundo específico, se necessário */
+@media screen and (min-width: 368px) {
+    .principal {
+        background-image: url('switzerland-6487204_1920.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}
